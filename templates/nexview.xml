@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Nexview</Name>
+  <Repository>ghcr.io/derkezorm/nexview</Repository>
+  <Registry>https://github.com/DerKezorm/nexview/pkgs/container/nexview</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexview/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexview</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexview#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://nexview.nexapps.dev</Project>
+  <Overview>Nexview is a self-hosted media discovery dashboard for a household - family, flatmates, a circle of friends. It shows new releases from TMDB, marks what is already in your library, and hands requests to Radarr (movies) and Sonarr (shows).&#13;&#13;Everyone gets their own account with roles, approvals, quotas, per-user blocklists and an age restriction, so children can browse a view of their own. The interface is available in English and German.&#13;&#13;Nexview downloads nothing itself and stores no media. It is the front door to a setup you already run - it does not replace any part of it.&#13;&#13;Without a TMDB key Nexview starts with sample data, so you can look around before deciding anything.</Overview>
+  <Category>MediaApp:Video Tools:</Category>
+  <WebUI>http://[IP]:[PORT:5173]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexview.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexview.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-08-24</Date>
+  <Description>Nexview is a self-hosted media discovery dashboard for a household. It shows new releases from TMDB, marks what is already in your Radarr and Sonarr libraries, and turns a request into an add on the right instance with the right quality profile and root folder.&#13;&#13;Accounts and roles: every member signs in separately. Admins approve or decline, set monthly quotas per person, block genres or ratings per person, and can put an account into a children's view with large category tiles and an age filter.&#13;&#13;All data lives in a single SQLite database under /data, together with the key used to encrypt your stored Radarr, Sonarr and TMDB credentials. Back up that one folder and you have backed up Nexview.&#13;&#13;Set PUID and PGID to the user that should own the files - 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:5173]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexview</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value>Etc/UTC</Value><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXVIEW_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXVIEW_LOG_LEVEL</Name><Mode/></Variable>
+    <Variable><Value>30</Value><Name>NEXVIEW_ACCESS_TOKEN_MINUTES</Name><Mode/></Variable>
+    <Variable><Value>30</Value><Name>NEXVIEW_REFRESH_TOKEN_DAYS</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="5173" Mode="tcp" Description="Port you reach Nexview at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">5173</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexview" Mode="rw" Description="Holds the SQLite database, the encryption key for your stored API credentials, and profile pictures. Back up this folder." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexview</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="Etc/UTC" Mode="" Description="Time zone used for the log and for dates in the interface, for example Europe/Berlin." Type="Variable" Display="always" Required="false" Mask="false">Etc/UTC</Config>
+  <Config Name="Secret Key" Target="NEXVIEW_SECRET_KEY" Default="" Mode="" Description="Signs login tokens and encrypts your stored Radarr, Sonarr and TMDB credentials. Leave blank: Nexview generates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Log Level" Target="NEXVIEW_LOG_LEVEL" Default="" Mode="" Description="Emergency override: quiet, normal, detailed or trace. Leave blank - the level is set inside the app and turns itself back down after troubleshooting. Only set this if Nexview will not start at all." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Access Token Minutes" Target="NEXVIEW_ACCESS_TOKEN_MINUTES" Default="30" Mode="" Description="How long a sign-in stays valid before it is refreshed." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
+  <Config Name="Refresh Token Days" Target="NEXVIEW_REFRESH_TOKEN_DAYS" Default="30" Mode="" Description="How long someone stays signed in without entering their password again." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
+</Container>
