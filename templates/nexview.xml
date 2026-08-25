@@ -49,6 +49,7 @@
     <Variable><Value/><Name>NEXVIEW_PORT</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXVIEW_SECRET_KEY</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXVIEW_LOG_LEVEL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXVIEW_CLIENT_IP</Name><Mode/></Variable>
     <Variable><Value>30</Value><Name>NEXVIEW_ACCESS_TOKEN_MINUTES</Name><Mode/></Variable>
     <Variable><Value>30</Value><Name>NEXVIEW_REFRESH_TOKEN_DAYS</Name><Mode/></Variable>
   </Environment>
@@ -60,6 +61,7 @@
   <Config Name="Time Zone" Target="TZ" Default="Etc/UTC" Mode="" Description="Time zone used for the log and for dates in the interface, for example Europe/Berlin." Type="Variable" Display="always" Required="false" Mask="false">Etc/UTC</Config>
   <Config Name="Container Port (host networking only)" Target="NEXVIEW_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking there is no mapping - the port inside the container is the port on your server - so use this to move Nexview off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Secret Key" Target="NEXVIEW_SECRET_KEY" Default="" Mode="" Description="Signs login tokens and encrypts your stored Radarr, Sonarr and TMDB credentials. Leave blank: Nexview generates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Caller Address" Target="NEXVIEW_CLIENT_IP" Default="" Mode="" Description="Only needed if you want failed sign-ins counted per address as well as per account. Nexview cannot tell on its own whether a reverse proxy sits in front of it, and behind one every request looks like it comes from the same address - so leaving this blank is always safe, and accounts are still counted. Set direct if Nexview is reachable without a proxy, proxy if exactly one sits in front, or proxy:2 for two (for example Cloudflare and then your own). Your proxy must pass X-Forwarded-For; most do by default." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Log Level" Target="NEXVIEW_LOG_LEVEL" Default="" Mode="" Description="Emergency override: quiet, normal, detailed or trace. Leave blank - the level is set inside the app and turns itself back down after troubleshooting. Only set this if Nexview will not start at all." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Access Token Minutes" Target="NEXVIEW_ACCESS_TOKEN_MINUTES" Default="30" Mode="" Description="How long a sign-in stays valid before it is refreshed." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
   <Config Name="Refresh Token Days" Target="NEXVIEW_REFRESH_TOKEN_DAYS" Default="30" Mode="" Description="How long someone stays signed in without entering their password again." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
