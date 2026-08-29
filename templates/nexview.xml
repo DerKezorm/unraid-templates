@@ -23,7 +23,7 @@
   <ExtraParams/>
   <PostArgs/>
   <CPUset/>
-  <Date>2026-08-24</Date>
+  <Date>2026-08-29</Date>
   <Description>Nexview is a self-hosted media discovery dashboard for a household. It shows new releases from TMDB, marks what is already in your Radarr and Sonarr libraries, and turns a request into an add on the right instance with the right quality profile and root folder.&#13;&#13;Accounts and roles: every member signs in separately. Admins approve or decline, set monthly quotas per person, block genres or ratings per person, and can put an account into a children's view with large category tiles and an age filter.&#13;&#13;All data lives in a single SQLite database under /data, together with the key used to encrypt your stored Radarr, Sonarr and TMDB credentials. Back up that one folder and you have backed up Nexview.&#13;&#13;Set PUID and PGID to the user that should own the files - 99 and 100 are the Unraid defaults and work out of the box.</Description>
   <Networking>
     <Mode>bridge</Mode>
@@ -50,6 +50,7 @@
     <Variable><Value/><Name>NEXVIEW_SECRET_KEY</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXVIEW_LOG_LEVEL</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXVIEW_CLIENT_IP</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXVIEW_URL_BASE</Name><Mode/></Variable>
     <Variable><Value>30</Value><Name>NEXVIEW_ACCESS_TOKEN_MINUTES</Name><Mode/></Variable>
     <Variable><Value>30</Value><Name>NEXVIEW_REFRESH_TOKEN_DAYS</Name><Mode/></Variable>
   </Environment>
@@ -63,6 +64,7 @@
   <Config Name="Secret Key" Target="NEXVIEW_SECRET_KEY" Default="" Mode="" Description="Signs login tokens and encrypts your stored Radarr, Sonarr and TMDB credentials. Leave blank: Nexview generates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
   <Config Name="Caller Address" Target="NEXVIEW_CLIENT_IP" Default="" Mode="" Description="Only needed if you want failed sign-ins counted per address as well as per account. Nexview cannot tell on its own whether a reverse proxy sits in front of it, and behind one every request looks like it comes from the same address - so leaving this blank is always safe, and accounts are still counted. Set direct if Nexview is reachable without a proxy, proxy if exactly one sits in front, or proxy:2 for two (for example Cloudflare and then your own). Your proxy must pass X-Forwarded-For; most do by default." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Log Level" Target="NEXVIEW_LOG_LEVEL" Default="" Mode="" Description="Emergency override: quiet, normal, detailed or trace. Leave blank - the level is set inside the app and turns itself back down after troubleshooting. Only set this if Nexview will not start at all." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="URL Base" Target="NEXVIEW_URL_BASE" Default="" Mode="" Description="Only needed to serve Nexview under a sub-path of a shared domain behind a reverse proxy, for example /nexview for https://example.com/nexview/. Leave blank to serve at the root, exactly as before. Both common proxy setups work - passing the path through unchanged and stripping the prefix. Remember to include the prefix in the public address inside Nexview's settings, or links in outgoing mail lead nowhere. Proxy examples: README, section 'Behind a reverse proxy'." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Access Token Minutes" Target="NEXVIEW_ACCESS_TOKEN_MINUTES" Default="30" Mode="" Description="How long a sign-in stays valid before it is refreshed." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
   <Config Name="Refresh Token Days" Target="NEXVIEW_REFRESH_TOKEN_DAYS" Default="30" Mode="" Description="How long someone stays signed in without entering their password again." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
 </Container>
