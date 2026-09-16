@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexdeck</Name>
+  <Repository>ghcr.io/derkezorm/nexdeck</Repository>
+  <Registry>https://github.com/DerKezorm/nexdeck/pkgs/container/nexdeck</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexdeck/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexdeck</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexdeck#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://nexdeck.nexapps.dev</Project>
+  <Overview>nexdeck is a live dashboard for the homelab. Its cards show what the services behind it are doing right now: Unraid, Proxmox and Docker, the media and download stack, DNS filters, backups, cameras and many more. One container, a single SQLite file.&#13;&#13;Administrators can act from the cards, for example start and stop containers or pause downloads, and every action is logged. Boards can be shared with members or shown on a wall display as a kiosk, and nexdeck can send a notification when something fails. The interface is available in English and German.</Overview>
+  <Category>Tools: Status:Stable</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexdeck.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexdeck.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-09-16</Date>
+  <Description>nexdeck is a live dashboard for the homelab. Its cards show what the services behind it are doing right now, with actions for administrators, kiosk displays for the wall and notifications when something fails.&#13;&#13;On first start you create the first account in the browser. Until that account exists anyone who can reach the page can create it, so do this before you expose nexdeck beyond your home network.&#13;&#13;All data lives under /data: the SQLite database, uploaded pictures and, unless you set a secret key, the key that encrypts the stored API keys. Back up that one folder. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;The Docker socket is optional and mounted read-only. It lets nexdeck show the containers on this server, start and stop them and follow their logs. Access to the socket amounts to root on the server whatever the mount mode, so clear that path if you do not want the Docker cards.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:5175]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexdeck</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+    <Volume>
+      <HostDir>/var/run/docker.sock</HostDir>
+      <ContainerDir>/var/run/docker.sock</ContainerDir>
+      <Mode>ro</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXDECK_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXDECK_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value/><Name>DOCKER_GID</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXDECK_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXDECK_LOG_LEVEL</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="5175" Mode="tcp" Description="Port you reach nexdeck at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">5175</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexdeck" Mode="rw" Description="Holds the SQLite database, uploaded pictures and the generated key. Back up this folder, and keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexdeck</Config>
+  <Config Name="Docker Socket" Target="/var/run/docker.sock" Default="/var/run/docker.sock" Mode="ro" Description="Optional. Lets nexdeck show the containers on this server, start and stop them and follow their logs. Access to the socket amounts to root on the server even read-only; inside nexdeck only administrators can act on containers. Clear this path if you do not want the Docker cards." Type="Path" Display="always" Required="false" Mask="false">/var/run/docker.sock</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Time zone of the server side, for example Europe/Berlin. Clocks in the browser follow the browser. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Public URL" Target="NEXDECK_PUBLIC_URL" Default="" Mode="" Description="How browsers reach nexdeck, for example https://deck.example.com. Needed for sign-in with an identity provider and for Web Push. It can also be set later inside nexdeck." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXDECK_SECRET_KEY" Default="" Mode="" Description="Encrypts the stored API keys and signs sessions. Leave blank: nexdeck creates one on first start and keeps it in /data/secret.key. Setting it here moves the key out of the data folder, so a stolen copy of that folder alone is worthless. Never change it afterwards, every stored credential is bound to it." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Docker Group ID" Target="DOCKER_GID" Default="" Mode="" Description="Group that owns the Docker socket on this server. Leave blank, nexdeck reads it from the socket at start. Only set it if the Docker cards answer permission denied." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXDECK_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexdeck off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Log Level" Target="NEXDECK_LOG_LEVEL" Default="" Mode="" Description="Leave blank. The level is chosen inside nexdeck, where a deep level switches itself back off. A value here fixes the level and greys that switch out. Only set it if nexdeck will not start." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>

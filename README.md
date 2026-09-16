@@ -7,6 +7,7 @@ alongside the apps themselves.
 | --- | --- | --- |
 | [Nexview](templates/nexview.xml) | Self-hosted media discovery and request dashboard for Radarr and Sonarr, with accounts, approvals, quotas and an age restriction. | [DerKezorm/nexview](https://github.com/DerKezorm/nexview) |
 | [nexmail](templates/nexmail.xml) | Self-hosted email client in the browser: several IMAP mailboxes in one window, calendar over CalDAV, address books over CardDAV, one container and one SQLite file. | [DerKezorm/nexmail](https://github.com/DerKezorm/nexmail) |
+| [nexdeck](templates/nexdeck.xml) | Live dashboard for the homelab: cards for Unraid, Docker, Proxmox, the media and download stack and many more services, with actions, kiosk displays and notifications. | [DerKezorm/nexdeck](https://github.com/DerKezorm/nexdeck) |
 
 ## Installing from Community Applications
 
@@ -27,7 +28,8 @@ https://github.com/DerKezorm/unraid-templates
 Template problems belong here in the [issue tracker](https://github.com/DerKezorm/unraid-templates/issues).
 Problems with an app itself belong in that app's own repository: for Nexview that is
 [DerKezorm/nexview/issues](https://github.com/DerKezorm/nexview/issues), for nexmail
-[DerKezorm/nexmail/issues](https://github.com/DerKezorm/nexmail/issues).
+[DerKezorm/nexmail/issues](https://github.com/DerKezorm/nexmail/issues), for nexdeck
+[DerKezorm/nexdeck/issues](https://github.com/DerKezorm/nexdeck/issues).
 
 ## Licence
 
