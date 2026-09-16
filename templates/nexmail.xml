@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexmail</Name>
+  <Repository>ghcr.io/derkezorm/nexmail</Repository>
+  <Registry>https://github.com/DerKezorm/nexmail/pkgs/container/nexmail</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexmail/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexmail</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexmail#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://nexmail.nexapps.dev</Project>
+  <Overview>nexmail is a self-hosted email client in the browser. It brings several IMAP mailboxes together in one window: iCloud, Google, Microsoft or any other provider. One container, a single SQLite file, no second database and no cloud service that gets to see your mail.&#13;&#13;It reads, writes, searches, labels, schedules and sends, keeps a calendar over CalDAV, syncs address books over CardDAV and can reach you with the browser closed. Every member of the household gets their own account and mailboxes. The interface is available in English and German.&#13;&#13;nexmail is a mail client, not a mail server. Your mail stays with your provider.</Overview>
+  <Category>Productivity: Network:Messenger</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexmail.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexmail.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-09-16</Date>
+  <Description>nexmail is a self-hosted email client in the browser. It brings several IMAP mailboxes together in one window, with a merged view of all inboxes, full-text search, labels stored as IMAP keywords, rules, signatures, scheduled sending with undo, a calendar over CalDAV, address books over CardDAV and push notifications.&#13;&#13;On first start you create the first account in the browser. Until that account exists anyone who can reach the page can create it, so do this before you expose nexmail beyond your home network.&#13;&#13;All data lives under /data: the SQLite database, attachments, and the key that encrypts your stored mailbox passwords. Back up that one folder. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:5174]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexmail</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXMAIL_ZEITZONE</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXMAIL_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXMAIL_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXMAIL_URL_BASE</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXMAIL_COOKIE_SECURE</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXMAIL_CLIENT_IP</Name><Mode/></Variable>
+    <Variable><Value>120</Value><Name>NEXMAIL_TAKT_SEKUNDEN</Name><Mode/></Variable>
+    <Variable><Value>30</Value><Name>NEXMAIL_SITZUNG_TAGE</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXMAIL_LOG_STUFE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="5174" Mode="tcp" Description="Port you reach nexmail at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">5174</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexmail" Mode="rw" Description="Holds the SQLite database, attachments and the key that encrypts your stored mailbox passwords. Back up this folder, and keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexmail</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="NEXMAIL_ZEITZONE" Default="" Mode="" Description="Time zone for dates in the interface and for scheduled sending, for example Europe/Berlin. A container runs in UTC; leave this blank to set the zone later inside nexmail." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXMAIL_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexmail off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXMAIL_SECRET_KEY" Default="" Mode="" Description="Encrypts your stored mailbox passwords. Leave blank: nexmail creates one on first start and keeps it in /data/secret.key. Setting it here moves the key out of the data folder, so a stolen copy of that folder alone is worthless. You then have to back up the key yourself, because without it the database is unreadable." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="URL Base" Target="NEXMAIL_URL_BASE" Default="" Mode="" Description="Only needed to serve nexmail under a sub-path behind a reverse proxy, for example /nexmail for https://example.com/nexmail/. Leave blank to serve at the root." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secure Cookie" Target="NEXMAIL_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https. Use on only if a proxy terminates TLS and forwards plain http, and never if nexmail should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+  <Config Name="Caller Address" Target="NEXMAIL_CLIENT_IP" Default="" Mode="" Description="Only needed if failed sign-ins should be counted per address as well as per account. Leaving this blank is always safe. Set direct if nexmail is reachable without a proxy, proxy if exactly one sits in front, or proxy:2 for two. If this says direct while a proxy sits in front, every request looks like the same address and one typo locks everyone out." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Sync Interval (seconds)" Target="NEXMAIL_TAKT_SEKUNDEN" Default="120" Mode="" Description="How often nexmail checks for new mail on its own. 0 turns the background sync off, mail then arrives on click. Below 30 seconds would be impolite towards your provider." Type="Variable" Display="advanced" Required="false" Mask="false">120</Config>
+  <Config Name="Session Days" Target="NEXMAIL_SITZUNG_TAGE" Default="30" Mode="" Description="How many days a sign-in lasts without use." Type="Variable" Display="advanced" Required="false" Mask="false">30</Config>
+  <Config Name="Log Level" Target="NEXMAIL_LOG_STUFE" Default="" Mode="" Description="Emergency override: leise, normal, ausfuehrlich or alles. Leave blank, the level is set inside the app and the deep levels switch themselves back off. Only set this if nexmail will not start at all." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
