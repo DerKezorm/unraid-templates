@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexpulse</Name>
+  <Repository>ghcr.io/derkezorm/nexpulse</Repository>
+  <Registry>https://github.com/DerKezorm/nexpulse/pkgs/container/nexpulse</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexpulse/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexpulse</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexpulse#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://github.com/DerKezorm/nexpulse</Project>
+  <Overview>nexpulse is a speed test tracker for the homelab. It measures your internet connection on a schedule, shows every test live on a gauge, keeps the history with charts and averages, and tells you over ntfy, Gotify or a webhook when the line is slower than your plan.&#13;&#13;It measures with Cloudflare out of the box, with public or your own LibreSpeed servers, and optionally with Ookla. Schedules can run every few minutes, daily, by cron, or several times a day at random times to find the busy hours. An API with read or run keys feeds dashboards like nexdeck or Home Assistant. The interface is available in English and German.</Overview>
+  <Category>Network:Management Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexpulse.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexpulse.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-09-19</Date>
+  <Description>nexpulse is a speed test tracker for the homelab: live gauge, schedules (including several tests a day at random times), history with charts, a plan threshold, alerts over ntfy, Gotify or a webhook, and an API for dashboards.&#13;&#13;There are no accounts and, by default, no password. Set one in the settings if nexpulse can be reached from outside your network. The API always needs a key.&#13;&#13;Ookla is not included. If you activate it in the settings, nexpulse downloads the official Speedtest CLI from Ookla. Ookla's license does not cover running it in a container like this, so that is your decision and your risk.&#13;&#13;All data lives under /data: the SQLite database and the key that signs sessions. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8440]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexpulse</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPULSE_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPULSE_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXPULSE_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8440" Mode="tcp" Description="Port you reach nexpulse at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8440</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexpulse" Mode="rw" Description="Holds the SQLite database with all results and the key that signs sessions. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexpulse</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Schedules run at the wall clock time of this zone, for example Europe/Berlin. Leave blank to pick the zone later in the settings; until then nexpulse uses UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXPULSE_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexpulse off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXPULSE_SECRET_KEY" Default="" Mode="" Description="Signs sessions and encrypts stored notification tokens. Leave blank: nexpulse creates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXPULSE_COOKIE_SECURE" Default="auto" Mode="" Description="Only matters with a password. auto marks the session cookie Secure when the request arrived over https. Use on only if a proxy terminates TLS and forwards plain http, and never if nexpulse should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>
