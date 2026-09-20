@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexbeat</Name>
+  <Repository>ghcr.io/derkezorm/nexbeat</Repository>
+  <Registry>https://github.com/DerKezorm/nexbeat/pkgs/container/nexbeat</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexbeat/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexbeat</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexbeat#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://github.com/DerKezorm/nexbeat</Project>
+  <Overview>nexbeat finds music and requests it from Lidarr. A discover page recommends artists from what your library and each user already have, twenty main genres can be browsed, and every artist page shows the discography, the most played albums, similar artists and thirty second previews.&#13;&#13;A request adds the album to Lidarr and monitors just that one; a whole artist adds the studio albums and future releases. Everyone gets an account with a quota counted per request, optional approval, and invitations by email or as a link to pass on. The interface is available in English and German.&#13;&#13;nexbeat downloads nothing itself and never changes Lidarr settings. It needs a Lidarr you already run.</Overview>
+  <Category>MediaApp:Music Tools:</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexbeat.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexbeat.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-09-20</Date>
+  <Description>nexbeat is a small companion to Lidarr: discover artists, browse genres, search MusicBrainz and request an album or a whole artist with one click.&#13;&#13;Open the web interface and create the first account, which becomes the administrator. Then enter your Lidarr address and API key in the settings, pick the root folder and the profiles, and invite the people who should be allowed to request.&#13;&#13;nexbeat never changes Lidarr settings. It adds and monitors artists and albums and starts searches, nothing else.&#13;&#13;All data lives under /data: the SQLite database and the key that signs sessions and encrypts the stored credentials. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8030]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexbeat</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBEAT_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBEAT_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXBEAT_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8030" Mode="tcp" Description="Port you reach nexbeat at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8030</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexbeat" Mode="rw" Description="Holds the SQLite database with accounts, requests and settings, and the key that signs sessions. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexbeat</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="The zone the container runs in, for example Europe/Berlin. Quotas count in calendar days, weeks and months of this zone. Leave blank to use UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXBEAT_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexbeat off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXBEAT_SECRET_KEY" Default="" Mode="" Description="Signs sessions and encrypts the stored credentials, such as the Lidarr API key and the password of the mail server. Leave blank: nexbeat creates one on first start and keeps it in /data/secret.key. Back it up together with the data directory." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXBEAT_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https. Use on only if a proxy terminates TLS and forwards plain http, and never if nexbeat should also be reachable over http, or nobody stays signed in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>
