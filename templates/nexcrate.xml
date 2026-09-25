@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexcrate</Name>
+  <Repository>ghcr.io/derkezorm/nexcrate</Repository>
+  <Registry>https://github.com/DerKezorm/nexcrate/pkgs/container/nexcrate</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexcrate/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexcrate</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexcrate#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://nexcrate.nexapps.dev</Project>
+  <Overview>nexcrate manages movies, shows and music in one self-hosted app, in place of Radarr, Sonarr and Lidarr side by side. A movie or a show can have several versions, such as Full HD and 4K, each with its own profile and folder, so there is no second instance for 4K. Music has one version for now.&#13;&#13;Profiles come from everyday questions with the rules of the TRaSH Guides inside, and an expert mode edits every part by hand. Movies, shows and anime come from TMDB, music from MusicBrainz. Releases are searched over Newznab and Torznab indexers and downloaded through SABnzbd, NZBGet, qBittorrent, Transmission or Deluge; torrents are hardlinked and keep seeding. A switch-over reads the library, indexers, download clients and profiles of an existing Radarr, Sonarr and Lidarr, then takes the files over.&#13;&#13;Also: automatic search and RSS with delay rules per version, renaming with a preview and an undo, library rules that pick the target folder, a calendar with an iCal feed, notifications, Plex, Jellyfin and Emby told about new files, encrypted backups, and an API for other programs.</Overview>
+  <Category>MediaApp:Video MediaApp:Music Downloaders:</Category>
+  <WebUI>http://[IP]:[PORT:8390]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexcrate.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexcrate.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-09-25</Date>
+  <Description>nexcrate is one app for movies, shows and music in place of Radarr, Sonarr and Lidarr, with several versions per title such as Full HD and 4K.&#13;&#13;Open the web interface and create the account. Whoever reaches a fresh installation first can create it, and it is the only account there is, so do that right after the first start and before the port is reachable from other networks. Then add your indexers and download clients, create a profile from the questions, and either add titles or switch over from Radarr, Sonarr and Lidarr in the settings.&#13;&#13;The data of nexcrate itself lives under /data: the SQLite database, the key that encrypts the stored credentials, logs and backups. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems. Mount an empty folder there: nexcrate refuses to start on a folder that holds files it did not create.&#13;&#13;Media and downloads go under a second path such as /media. Put the download folders of SABnzbd or qBittorrent and the movie, show and music folders below one host folder and mount that folder once, so hardlinks work and a torrent does not take its space twice. Your download clients may see the same folder under another path; nexcrate notices that at the first finished download and asks you once to confirm.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8390]</HostPort>
+        <ContainerPort>8390</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexcrate</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+    <Volume>
+      <HostDir>/mnt/user/data</HostDir>
+      <ContainerDir>/media</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCRATE_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCRATE_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXCRATE_COOKIE_SECURE</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCRATE_LOG_LEVEL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCRATE_URL_BASE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8390" Default="8390" Mode="tcp" Description="Port you reach nexcrate at. Container port: 8390" Type="Port" Display="always" Required="true" Mask="false">8390</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexcrate" Mode="rw" Description="Holds the SQLite database, the key that encrypts the stored credentials, logs and backups. Keep it on a local disk, not on a network share, and give nexcrate a folder of its own: it refuses to start on a folder that holds files it did not create." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexcrate</Config>
+  <Config Name="Media (Container Path: /media)" Target="/media" Default="/mnt/user/data" Mode="rw" Description="One folder that holds your downloads and your movie, show and music libraries, for example /mnt/user/data with torrents, usenet and media below it. Mounted once, so hardlinks work and a torrent does not take its space twice. Change it to the folder you use. nexcrate offers only folders mounted like this for libraries and downloads, never /data." Type="Path" Display="always" Required="false" Mask="false">/mnt/user/data</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="The zone the container runs in, for example Europe/Berlin. The calendar, the planning of upcoming episodes and the timestamps of backups use it. Leave blank to use UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXCRATE_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8390. On host networking the port inside the container is the port on your server, so use this to move nexcrate off 8390 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXCRATE_SECRET_KEY" Default="" Mode="" Description="Encrypts the stored credentials, such as the API keys of indexers and download clients. Leave blank: nexcrate creates one on first start and keeps it in /data/secret.key. Back it up together with the data directory; without it the stored credentials cannot be read." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXCRATE_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https. Use on only if a proxy terminates TLS and forwards plain http, and never if nexcrate should also be reachable over http, or nobody stays signed in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+  <Config Name="Log Mode" Target="NEXCRATE_LOG_LEVEL" Default="" Mode="" Description="Fixes the log mode: quiet, normal, detailed or trace. Leave blank to use the mode chosen in the interface. Meant for the case that nexcrate does not start at all." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="URL Base" Target="NEXCRATE_URL_BASE" Default="" Mode="" Description="Serve nexcrate under a sub path behind a reverse proxy, such as /nexcrate. Leave blank for the root." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
