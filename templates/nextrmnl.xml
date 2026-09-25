@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nextrmnl</Name>
+  <Repository>ghcr.io/derkezorm/nextrmnl</Repository>
+  <Registry>https://github.com/DerKezorm/nextrmnl/pkgs/container/nextrmnl</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nextrmnl/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nextrmnl</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nextrmnl#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://nextrmnl.nexapps.dev</Project>
+  <Overview>nextrmnl is SSH and SFTP in the browser for the machines in your own network: a terminal (xterm.js) with tabs, jump hosts and copy and paste the way PuTTY does it, plus file transfer next to it. Accounts with a vault each for keys and passwords, sealed with the account's password so that not even the operator can read it. Host keys are checked and remembered, unknown hosts are shown with their fingerprint first.&#13;&#13;Connections can be shared between accounts without sharing access, sign-in works with a password, an optional second factor from an authenticator app, or OpenID Connect (one-button setup for authentik). By default nextrmnl only connects into private networks. Backups as encrypted ZIP files, a log that never contains terminal content or credentials. The interface is available in English and German.</Overview>
+  <Category>Tools:Utilities Network:Management</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nextrmnl.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nextrmnl.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-09-26</Date>
+  <Description>nextrmnl is SSH and SFTP in the browser: a terminal with tabs and jump hosts, file transfer next to it, copy and paste like PuTTY, a vault per account for keys and passwords, host keys that are checked and remembered, accounts by invitation or OpenID Connect, an optional second factor, encrypted backups and a log without terminal content or credentials.&#13;&#13;Open the WebUI and create the operator account. Its password (at least 12 characters) also seals the vault: keys and passwords in it are readable with that password only, not by the operator and not from a backup. Put nextrmnl behind a reverse proxy with TLS before you use it from anywhere but your own desk; it holds the access to your machines, and pasting with a right click needs HTTPS anyway.&#13;&#13;By default nextrmnl only connects into private networks (10.x, 172.16 to 172.31, 192.168.x, 100.64.x, loopback). The operator can add networks and names or open it up in the settings.&#13;&#13;All data lives under /data: the SQLite database, secret.key, backups and logs. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8460]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nextrmnl</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTRMNL_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTRMNL_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTRMNL_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXTRMNL_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8460" Mode="tcp" Description="Port you reach nextrmnl at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8460</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nextrmnl" Mode="rw" Description="Holds the SQLite database with accounts, connections and the sealed vaults, the key secret.key, backups and logs. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nextrmnl</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Time zone for timestamps in the log and the session history, for example Europe/Berlin. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Public URL" Target="NEXTRMNL_PUBLIC_URL" Default="" Mode="" Description="The address people use to reach nextrmnl, for example https://nextrmnl.example.com when it sits behind a reverse proxy. Used for invitation links and the return address of OpenID Connect. Leave blank to take the address of the request; the same can be set later under Settings, Sign-in." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXTRMNL_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nextrmnl off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXTRMNL_SECRET_KEY" Default="" Mode="" Description="Protects the server-side secrets (the OpenID Connect client secret, second-factor seeds). Leave blank: nextrmnl creates one on first start and keeps it in /data/secret.key. The vaults do not depend on it; they open with the account's password only." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXTRMNL_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nextrmnl should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>
