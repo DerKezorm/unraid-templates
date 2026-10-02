@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexsift</Name>
+  <Repository>ghcr.io/derkezorm/nexsift</Repository>
+  <Registry>https://github.com/DerKezorm/nexsift/pkgs/container/nexsift</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexsift/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexsift</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexsift#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://github.com/DerKezorm/nexsift</Project>
+  <Overview>nexsift is the filter for your homelab's notifications. Every service reports to nexsift instead of to your phone: Proxmox, Unraid, Uptime Kuma, Watchtower, Home Assistant, the NAS, the UPS. nexsift collects everything in one inbox, sorts it into info, warning and critical, bundles the routine into one line per source and passes on only what matters, through ntfy, Gotify, Telegram, Apprise, a webhook or straight to the phone as a Web Push notification.&#13;&#13;Senders need no plugin and no change, because nexsift answers like the services they already know: a Gotify server, an ntfy server, a Discord webhook, a mail server, a syslog server or a plain webhook. All-clears close problems instead of opening new lines, quiet hours and a storm guard keep the phone calm when many things fail at once, and rules decide level, bundling and push. One operator account with a password or OpenID Connect (one-button setup for authentik), encrypted backups, a log without message content or tokens, read-only API keys for dashboards. The interface is available in English and German.</Overview>
+  <Category>Tools:Utilities Network:Messenger</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexsift.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexsift.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-10-02</Date>
+  <Description>nexsift collects the notifications of all your services in one inbox, bundles the noise and passes on only what matters: to your phone, or wherever you want it. Senders keep the addresses they expect, because nexsift answers like a Gotify server, an ntfy server, a Discord webhook, a mail server, a syslog server or a plain webhook.&#13;&#13;Open the WebUI and create the operator account (a password of at least 12 characters). Then add the first source; the dialog shows exactly what to enter in the sender.&#13;&#13;Each way in is its own port. Remove a port to close that door. If you change a host port, change NEXSIFT_PUBLIC_PORTS to match, so the setup hints show the right numbers. Mail and syslog use 2525 and 5514 here, because port 514 is taken once Unraid's own syslog server is switched on; map 25 and 514 instead if a device cannot change its port.&#13;&#13;Put the interface behind a reverse proxy with TLS before you open it beyond your own network. The other doors are meant for the devices at home and do not go through a proxy.&#13;&#13;All data lives under /data: the SQLite database, secret.key, backups and logs. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8490]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>[PORT:8491]</HostPort>
+        <ContainerPort>8001</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>[PORT:8492]</HostPort>
+        <ContainerPort>8002</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>[PORT:2525]</HostPort>
+        <ContainerPort>2525</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>[PORT:5514]</HostPort>
+        <ContainerPort>5514</ContainerPort>
+        <Protocol>udp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>[PORT:5514]</HostPort>
+        <ContainerPort>5514</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexsift</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value>web=8490,gotify=8491,ntfy=8492,smtp=2525,syslog=5514</Value><Name>NEXSIFT_PUBLIC_PORTS</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXSIFT_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXSIFT_TRUSTED_PROXIES</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXSIFT_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXSIFT_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8490" Mode="tcp" Description="Port you reach nexsift at. Also takes nexsift's own webhooks and Discord-style webhooks. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8490</Config>
+  <Config Name="Gotify Port" Target="8001" Default="8491" Mode="tcp" Description="Answers like a Gotify server (POST /message), for Watchtower and everything else built on shoutrrr. Remove this port to close the door. Container port: 8001" Type="Port" Display="always" Required="false" Mask="false">8491</Config>
+  <Config Name="ntfy Port" Target="8002" Default="8492" Mode="tcp" Description="Answers like an ntfy server (POST /topic), including the subscription Home Assistant's ntfy integration opens. Remove this port to close the door. Container port: 8002" Type="Port" Display="always" Required="false" Mask="false">8492</Config>
+  <Config Name="SMTP Port" Target="2525" Default="2525" Mode="tcp" Description="Plain SMTP without sign-in, for a UPS, a printer or an old router that can only send mail. Map 25 here if a device cannot change its mail port. Remove this port to close the door. Container port: 2525" Type="Port" Display="always" Required="false" Mask="false">2525</Config>
+  <Config Name="Syslog Port (UDP)" Target="5514" Default="5514" Mode="udp" Description="Syslog over UDP (RFC 3164 and 5424). Map 514 here if a device cannot change its syslog port and Unraid's own syslog server is off. Use the same number as the TCP port below. Container port: 5514" Type="Port" Display="always" Required="false" Mask="false">5514</Config>
+  <Config Name="Syslog Port (TCP)" Target="5514" Default="5514" Mode="tcp" Description="Syslog over TCP. Use the same number as the UDP port above. Container port: 5514" Type="Port" Display="always" Required="false" Mask="false">5514</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexsift" Mode="rw" Description="Holds the SQLite database with sources, rules, targets and messages, the key secret.key, backups and logs. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexsift</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="The clock the quiet hours of push targets go by, for example Europe/Berlin. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Ports as seen from outside" Target="NEXSIFT_PUBLIC_PORTS" Default="web=8490,gotify=8491,ntfy=8492,smtp=2525,syslog=5514" Mode="" Description="The host ports above, for the setup hints on the sources page. Keep it in line whenever you change a port, or the hints send devices to the wrong number. Nothing else depends on it." Type="Variable" Display="always" Required="false" Mask="false">web=8490,gotify=8491,ntfy=8492,smtp=2525,syslog=5514</Config>
+  <Config Name="Public URL" Target="NEXSIFT_PUBLIC_URL" Default="" Mode="" Description="The address people and senders use to reach nexsift, for example https://nexsift.example.com when it sits behind a reverse proxy. Used for the setup hints and the return address of OpenID Connect. Leave blank to take the address of the request; the setting under Settings wins when set." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXSIFT_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of reverse proxies whose X-Forwarded-For is believed, comma separated, for example 172.17.0.0/16. Leave blank when nexsift is not behind a proxy." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXSIFT_SECRET_KEY" Default="" Mode="" Description="Protects the stored secrets: source tokens, push target credentials, the OpenID Connect client secret and the Web Push keys. Leave blank: nexsift creates one on first start and keeps it in /data/secret.key, and the backup archive carries it. When set, it wins over secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXSIFT_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nexsift should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>

@@ -11,6 +11,7 @@ alongside the apps themselves.
 | [nexpulse](templates/nexpulse.xml) | Speed test tracker for the homelab: live gauge, schedules with random times, history, alerts and an API, measuring with Cloudflare, LibreSpeed and optionally Ookla. | [DerKezorm/nexpulse](https://github.com/DerKezorm/nexpulse) |
 | [nexbeat](templates/nexbeat.xml) | Find music and request it from Lidarr: recommendations from your library, genres, MusicBrainz search, accounts with quotas and approvals. | [DerKezorm/nexbeat](https://github.com/DerKezorm/nexbeat) |
 | [nextrmnl](templates/nextrmnl.xml) | SSH and SFTP in the browser: terminal with tabs and jump hosts, file transfer, a vault per account for keys and passwords, host key checks, accounts by invitation or OpenID Connect, a second factor. | [DerKezorm/nextrmnl](https://github.com/DerKezorm/nextrmnl) |
+| [nexsift](templates/nexsift.xml) | The filter for your homelab's notifications: one inbox for every service, answers like Gotify, ntfy, Discord, SMTP and syslog, bundles the noise and pushes only what matters. | [DerKezorm/nexsift](https://github.com/DerKezorm/nexsift) |
 
 ## Installing from Community Applications
 
@@ -35,7 +36,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexdeck/issues](https://github.com/DerKezorm/nexdeck/issues), for nexpulse
 [DerKezorm/nexpulse/issues](https://github.com/DerKezorm/nexpulse/issues), for nexbeat
 [DerKezorm/nexbeat/issues](https://github.com/DerKezorm/nexbeat/issues), for nextrmnl
-[DerKezorm/nextrmnl/issues](https://github.com/DerKezorm/nextrmnl/issues).
+[DerKezorm/nextrmnl/issues](https://github.com/DerKezorm/nextrmnl/issues), for nexsift
+[DerKezorm/nexsift/issues](https://github.com/DerKezorm/nexsift/issues).
 
 ## Licence
 
