@@ -13,6 +13,7 @@ alongside the apps themselves.
 | [nextrmnl](templates/nextrmnl.xml) | SSH and SFTP in the browser: terminal with tabs and jump hosts, file transfer, a vault per account for keys and passwords, host key checks, accounts by invitation or OpenID Connect, a second factor. | [DerKezorm/nextrmnl](https://github.com/DerKezorm/nextrmnl) |
 | [nexsift](templates/nexsift.xml) | The filter for your homelab's notifications: one inbox for every service, answers like Gotify, ntfy, Discord, SMTP and syslog, bundles the noise and pushes only what matters. | [DerKezorm/nexsift](https://github.com/DerKezorm/nexsift) |
 | [nexcanvas](templates/nexcanvas.xml) | A whiteboard for your own server like Apple Freeform: notes, shapes, drawings and photos, edited live together, with frames, a shape library, templates and JSON Canvas. | [DerKezorm/nexcanvas](https://github.com/DerKezorm/nexcanvas) |
+| [nexlore](templates/nexlore.xml) | Notes for your own server, in the browser: Markdown files on your disk, a WYSIWYG editor, wiki links and a map of all notes to zoom into, shared spaces with rights. | [DerKezorm/nexlore](https://github.com/DerKezorm/nexlore) |
 
 ## Installing from Community Applications
 
@@ -39,7 +40,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexbeat/issues](https://github.com/DerKezorm/nexbeat/issues), for nextrmnl
 [DerKezorm/nextrmnl/issues](https://github.com/DerKezorm/nextrmnl/issues), for nexsift
 [DerKezorm/nexsift/issues](https://github.com/DerKezorm/nexsift/issues), for nexcanvas
-[DerKezorm/nexcanvas/issues](https://github.com/DerKezorm/nexcanvas/issues).
+[DerKezorm/nexcanvas/issues](https://github.com/DerKezorm/nexcanvas/issues), for nexlore
+[DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues).
 
 ## Licence
 

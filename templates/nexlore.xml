@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexlore</Name>
+  <Repository>ghcr.io/derkezorm/nexlore</Repository>
+  <Registry>https://github.com/DerKezorm/nexlore/pkgs/container/nexlore</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexlore/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexlore</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexlore#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://www.nexlore.de</Project>
+  <Overview>nexlore is a notes app for your own server, in the browser: Markdown files on your disk, written in a real editor (WYSIWYG, slash menu, tables, callouts, properties), linked with [[wiki links]] and backlinks, and laid out as a map you zoom into, from all your spaces down to a single note. The files stay plain Markdown, so Obsidian, Syncthing or any editor can work on the same folder at the same time.&#13;&#13;Daily notes with a calendar, tasks with due dates and repeats, templates, table and board views, canvases in the open JSON Canvas format, full text search with operators, versions and a trash. Spaces with read, write and manage rights, accounts by invitation or OpenID Connect (one-button setup for authentik), an optional second factor, comments, public pages, MCP for AI helpers, an API, backups and a log. English and German, light and dark, installable on the phone.</Overview>
+  <Category>Productivity: Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexlore.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexlore.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-10-04</Date>
+  <Description>nexlore is a notes app for your own server, in the browser: Markdown files on your disk, a WYSIWYG editor, wiki links and backlinks, a map of all your notes to zoom into, daily notes, tasks, canvases, spaces shared with rights.&#13;&#13;Open the WebUI and create the first account; it becomes the operator. It needs the setup code from the container log (click the nexlore icon, then Logs), a new one at every start until nexlore is set up. To choose the code yourself, set Setup Code below.&#13;&#13;Put nexlore behind a reverse proxy with TLS before you use it from anywhere but your own network. Then set Public URL and Trusted Proxies.&#13;&#13;All data lives under /data: the SQLite database, versions, the trash, secret.key, backups and logs, and the notes themselves in /data/vault. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems. To keep the notes in a folder of their own (one a sync tool or another editor also works on), add a path mapping for it, for example to /vault, and set Notes Folder to that container path.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8470]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexlore</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXLORE_SETUP_TOKEN</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXLORE_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXLORE_TRUSTED_PROXIES</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXLORE_VAULT_DIR</Name><Mode/></Variable>
+    <Variable><Value>false</Value><Name>NEXLORE_WATCH_POLLING</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXLORE_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXLORE_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXLORE_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8470" Mode="tcp" Description="Port you reach nexlore at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8470</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexlore" Mode="rw" Description="Holds the SQLite database with accounts, spaces, versions and the search index, the trash, the key secret.key, backups and logs, and the notes in /data/vault unless Notes Folder points elsewhere. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexlore</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Time zone for daily notes, tasks due today and timestamps in the log, for example Europe/Berlin. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Setup Code" Target="NEXLORE_SETUP_TOKEN" Default="" Mode="" Description="The code the first account needs to become the operator. Leave blank: nexlore makes a new one at every start until it is set up and writes it to the container log." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Public URL" Target="NEXLORE_PUBLIC_URL" Default="" Mode="" Description="The address people use to reach nexlore, for example https://notes.example.com when it sits behind a reverse proxy. Used for invitation links, public pages and the return address of OpenID Connect. Leave blank to take the address of the request; the same can be set later in the settings." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXLORE_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of your reverse proxies, comma separated, for example 172.16.0.0/12. Only their X-Forwarded-For is believed; without it every sign-in seems to come from the proxy and the brake against password guessing cannot tell people apart." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Notes Folder" Target="NEXLORE_VAULT_DIR" Default="" Mode="" Description="Container path of the folder with the notes, if they should not live in /data/vault: add a path mapping for that folder first (for example to /vault) and enter the container path here. Other programs may work on the same folder; nexlore notices their changes." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Watch by Polling" Target="NEXLORE_WATCH_POLLING" Default="false" Mode="" Description="true if the notes folder delivers no change notifications (some network mounts): nexlore then looks for changes by polling." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="Container Port (host networking only)" Target="NEXLORE_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexlore off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXLORE_SECRET_KEY" Default="" Mode="" Description="Protects the server-side secrets (the OpenID Connect client secret, the mail password, AI keys, second-factor seeds). Leave blank: nexlore creates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXLORE_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nexlore should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>
