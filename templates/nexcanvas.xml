@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexcanvas</Name>
+  <Repository>ghcr.io/derkezorm/nexcanvas</Repository>
+  <Registry>https://github.com/DerKezorm/nexcanvas/pkgs/container/nexcanvas</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexcanvas/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexcanvas</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexcanvas#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://www.nexcanvas.de</Project>
+  <Overview>nexcanvas is a whiteboard for your own server, in the spirit of Apple Freeform: sticky notes, shapes, text, lines, pen and highlighter, photos and PDFs on an endless board, edited by several people at the same time. Everybody sees each change at once, with the pointers and names of the others.&#13;&#13;Frames and scenes to present from, a shape library with over 350 shapes of its own (flowchart, BPMN, UML, floor plan to scale, network, house and electrics) plus the Lucide icons, over thirty templates and your own, backgrounds like grid, blueprint or chalkboard. Export as PNG and PDF, exchange with nexlore and Obsidian as JSON Canvas. Spaces with read, write and manage rights, accounts by invitation or OpenID Connect (one-button setup for authentik), an optional second factor, public pages, backups and a log. English and German, light and dark, works on the phone.</Overview>
+  <Category>Productivity: Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexcanvas.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexcanvas.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-10-04</Date>
+  <Description>nexcanvas is a whiteboard for your own server, like Apple Freeform: notes, shapes, drawings, photos and PDFs on an endless board, edited live together, with frames, scenes, a shape library, templates and JSON Canvas export.&#13;&#13;Open the WebUI and create the first account; it becomes the operator. It needs the setup code from the container log (click the nexcanvas icon, then Logs), a new one at every start until nexcanvas is set up. To choose the code yourself, set Setup Code below.&#13;&#13;Put nexcanvas behind a reverse proxy with TLS before you use it from anywhere but your own network, and let the proxy pass WebSockets through: boards are edited live over /api/boards/&lt;id&gt;/live. Then set Public URL and Trusted Proxies.&#13;&#13;All data lives under /data: the SQLite database, photos and files of the boards, secret.key, backups and logs. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8500]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexcanvas</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCANVAS_SETUP_TOKEN</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCANVAS_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCANVAS_TRUSTED_PROXIES</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCANVAS_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXCANVAS_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXCANVAS_COOKIE_SECURE</Name><Mode/></Variable>
+    <Variable><Value>50</Value><Name>NEXCANVAS_UPLOAD_MAX_MB</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8500" Mode="tcp" Description="Port you reach nexcanvas at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8500</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexcanvas" Mode="rw" Description="Holds the SQLite database with accounts, spaces and boards, the photos and files on the boards, the key secret.key, backups and logs. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexcanvas</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Time zone for timestamps in the log and the versions of a board, for example Europe/Berlin. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Setup Code" Target="NEXCANVAS_SETUP_TOKEN" Default="" Mode="" Description="The code the first account needs to become the operator. Leave blank: nexcanvas makes a new one at every start until it is set up and writes it to the container log." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Public URL" Target="NEXCANVAS_PUBLIC_URL" Default="" Mode="" Description="The address people use to reach nexcanvas, for example https://boards.example.com when it sits behind a reverse proxy. Used for invitation links, public pages and the return address of OpenID Connect. Leave blank to take the address of the request; the same can be set later in the settings." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXCANVAS_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of your reverse proxies, comma separated, for example 172.16.0.0/12. Only their X-Forwarded-For is believed; without it every sign-in seems to come from the proxy and the brake against password guessing cannot tell people apart." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXCANVAS_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexcanvas off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXCANVAS_SECRET_KEY" Default="" Mode="" Description="Protects the server-side secrets (the OpenID Connect client secret, the mail password, second-factor seeds). Leave blank: nexcanvas creates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXCANVAS_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nexcanvas should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+  <Config Name="Largest Upload (MB)" Target="NEXCANVAS_UPLOAD_MAX_MB" Default="50" Mode="" Description="The largest photo or file in megabytes that can be put on a board. The operator can lower it in the settings." Type="Variable" Display="advanced" Required="false" Mask="false">50</Config>
+</Container>
