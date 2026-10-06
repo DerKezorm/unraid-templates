@@ -14,6 +14,7 @@ alongside the apps themselves.
 | [nexsift](templates/nexsift.xml) | The filter for your homelab's notifications: one inbox for every service, answers like Gotify, ntfy, Discord, SMTP and syslog, bundles the noise and pushes only what matters. | [DerKezorm/nexsift](https://github.com/DerKezorm/nexsift) |
 | [nexcanvas](templates/nexcanvas.xml) | A whiteboard for your own server like Apple Freeform: notes, shapes, drawings and photos, edited live together, with frames, a shape library, templates and JSON Canvas. | [DerKezorm/nexcanvas](https://github.com/DerKezorm/nexcanvas) |
 | [nexlore](templates/nexlore.xml) | Notes for your own server, in the browser: Markdown files on your disk, a WYSIWYG editor, wiki links and a map of all notes to zoom into, shared spaces with rights. | [DerKezorm/nexlore](https://github.com/DerKezorm/nexlore) |
+| [nexbrand](templates/nexbrand.xml) | Your clients' corporate design in one place: colours, fonts, logos, rules and every version, with contrast checks by WCAG 2.2, client reviews, export as code, an API and MCP. | [DerKezorm/nexbrand](https://github.com/DerKezorm/nexbrand) |
 
 ## Installing from Community Applications
 
@@ -41,7 +42,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nextrmnl/issues](https://github.com/DerKezorm/nextrmnl/issues), for nexsift
 [DerKezorm/nexsift/issues](https://github.com/DerKezorm/nexsift/issues), for nexcanvas
 [DerKezorm/nexcanvas/issues](https://github.com/DerKezorm/nexcanvas/issues), for nexlore
-[DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues).
+[DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues), for nexbrand
+[DerKezorm/nexbrand/issues](https://github.com/DerKezorm/nexbrand/issues).
 
 ## Licence
 

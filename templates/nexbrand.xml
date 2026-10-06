@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexbrand</Name>
+  <Repository>ghcr.io/derkezorm/nexbrand</Repository>
+  <Registry>https://github.com/DerKezorm/nexbrand/pkgs/container/nexbrand</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexbrand/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexbrand</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexbrand#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://www.nexbrand.de</Project>
+  <Overview>nexbrand keeps the corporate design of your clients in one place, on your own server: colours with their print values, fonts with their licence, logos with the ground they belong on, a type scale, rules and example files, per client and per project, with every version kept on a time line.&#13;&#13;Checks are computed from the set: contrast of every pair by WCAG 2.2, logos at 3:1, colour vision deficiencies, nearly identical colours, fonts that must not leave the house. A workbench builds a new CI from a few words, a picture or one colour, clients review the directions through a link without an account, and the choice becomes version 1.0. Every version comes as CSS variables, a Tailwind 4 theme, SCSS or design tokens, over an API and over MCP for an AI in your editor. Access per client for people and teams, accounts by invitation or OpenID Connect (one-button setup for authentik), an optional second factor, public pages, backups and a log. English and German, light and dark.</Overview>
+  <Category>Productivity: Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexbrand.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexbrand.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-10-06</Date>
+  <Description>nexbrand keeps your clients' corporate design in one place, self-hosted: colours, fonts, logos, rules and every version, with contrast checks, client reviews, export as code, an API and MCP.&#13;&#13;Open the WebUI and create the first account; it becomes the operator. It needs the setup code from the container log (click the nexbrand icon, then Logs), a new one at every start until nexbrand is set up. To choose the code yourself, set Setup Code below.&#13;&#13;Put nexbrand behind a reverse proxy with TLS before you use it from anywhere but your own network, then set Public URL and Trusted Proxies.&#13;&#13;All data lives under /data: the SQLite database, logos, fonts and example files, secret.key, backups and logs. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8540]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexbrand</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBRAND_SETUP_TOKEN</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBRAND_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBRAND_TRUSTED_PROXIES</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBRAND_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXBRAND_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXBRAND_COOKIE_SECURE</Name><Mode/></Variable>
+    <Variable><Value>50</Value><Name>NEXBRAND_UPLOAD_MAX_MB</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8540" Mode="tcp" Description="Port you reach nexbrand at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8540</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexbrand" Mode="rw" Description="Holds the SQLite database with accounts, clients, versions and projects, the logos, fonts and example files, the key secret.key, backups and logs. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexbrand</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Time zone for timestamps in the log and the versions of a client, for example Europe/Berlin. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Setup Code" Target="NEXBRAND_SETUP_TOKEN" Default="" Mode="" Description="The code the first account needs to become the operator. Leave blank: nexbrand makes a new one at every start until it is set up and writes it to the container log." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Public URL" Target="NEXBRAND_PUBLIC_URL" Default="" Mode="" Description="The address people use to reach nexbrand, for example https://brand.example.com when it sits behind a reverse proxy. Used for invitation links, public pages, review links and the return address of OpenID Connect. Leave blank to take the address of the request; the same can be set later in the settings." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXBRAND_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of your reverse proxies, comma separated, for example 172.16.0.0/12. Only their X-Forwarded-For is believed; without it every sign-in seems to come from the proxy and the brake against password guessing cannot tell people apart." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXBRAND_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexbrand off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXBRAND_SECRET_KEY" Default="" Mode="" Description="Protects the server-side secrets (the OpenID Connect client secret, the mail password, second-factor seeds, keys for collecting). Leave blank: nexbrand creates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXBRAND_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nexbrand should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+  <Config Name="Largest Upload (MB)" Target="NEXBRAND_UPLOAD_MAX_MB" Default="50" Mode="" Description="The largest logo, font or example file in megabytes. The operator can lower it in the settings." Type="Variable" Display="advanced" Required="false" Mask="false">50</Config>
+</Container>
