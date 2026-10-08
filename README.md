@@ -15,6 +15,7 @@ alongside the apps themselves.
 | [nexcanvas](templates/nexcanvas.xml) | A whiteboard for your own server like Apple Freeform: notes, shapes, drawings and photos, edited live together, with frames, a shape library, templates and JSON Canvas. | [DerKezorm/nexcanvas](https://github.com/DerKezorm/nexcanvas) |
 | [nexlore](templates/nexlore.xml) | Notes for your own server, in the browser: Markdown files on your disk, a WYSIWYG editor, wiki links and a map of all notes to zoom into, shared spaces with rights. | [DerKezorm/nexlore](https://github.com/DerKezorm/nexlore) |
 | [nexbrand](templates/nexbrand.xml) | Your clients' corporate design in one place: colours, fonts, logos, rules and every version, with contrast checks by WCAG 2.2, client reviews, export as code, an API and MCP. | [DerKezorm/nexbrand](https://github.com/DerKezorm/nexbrand) |
+| [nexdiary](templates/nexdiary.xml) | A diary for the family on your own server: notes during the day, a page in the evening, encrypted per person, with a second factor, sharing of single days and an optional AI that only orders. | [DerKezorm/nexdiary](https://github.com/DerKezorm/nexdiary) |
 
 ## Installing from Community Applications
 
@@ -43,7 +44,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexsift/issues](https://github.com/DerKezorm/nexsift/issues), for nexcanvas
 [DerKezorm/nexcanvas/issues](https://github.com/DerKezorm/nexcanvas/issues), for nexlore
 [DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues), for nexbrand
-[DerKezorm/nexbrand/issues](https://github.com/DerKezorm/nexbrand/issues).
+[DerKezorm/nexbrand/issues](https://github.com/DerKezorm/nexbrand/issues), for nexdiary
+[DerKezorm/nexdiary/issues](https://github.com/DerKezorm/nexdiary/issues).
 
 ## Licence
 
