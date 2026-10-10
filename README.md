@@ -16,6 +16,7 @@ alongside the apps themselves.
 | [nexlore](templates/nexlore.xml) | Notes for your own server, in the browser: Markdown files on your disk, a WYSIWYG editor, wiki links and a map of all notes to zoom into, shared spaces with rights. | [DerKezorm/nexlore](https://github.com/DerKezorm/nexlore) |
 | [nexbrand](templates/nexbrand.xml) | Your clients' corporate design in one place: colours, fonts, logos, rules and every version, with contrast checks by WCAG 2.2, client reviews, export as code, an API and MCP. | [DerKezorm/nexbrand](https://github.com/DerKezorm/nexbrand) |
 | [nexdiary](templates/nexdiary.xml) | A diary for the family on your own server: notes during the day, a page in the evening, encrypted per person, with a second factor, sharing of single days and an optional AI that only orders. | [DerKezorm/nexdiary](https://github.com/DerKezorm/nexdiary) |
+| [nexpaper](templates/nexpaper.xml) | Paperless-ngx for the home, the simple version: papers of a household or a small firm on your own server, with an inbox, text recognition and search, vaults per person, a phone upload with camera and an import from Paperless-ngx. | [DerKezorm/nexpaper](https://github.com/DerKezorm/nexpaper) |
 
 ## Installing from Community Applications
 
@@ -45,7 +46,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexcanvas/issues](https://github.com/DerKezorm/nexcanvas/issues), for nexlore
 [DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues), for nexbrand
 [DerKezorm/nexbrand/issues](https://github.com/DerKezorm/nexbrand/issues), for nexdiary
-[DerKezorm/nexdiary/issues](https://github.com/DerKezorm/nexdiary/issues).
+[DerKezorm/nexdiary/issues](https://github.com/DerKezorm/nexdiary/issues), for nexpaper
+[DerKezorm/nexpaper/issues](https://github.com/DerKezorm/nexpaper/issues).
 
 ## Licence
 

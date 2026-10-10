@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nexpaper</Name>
+  <Repository>ghcr.io/derkezorm/nexpaper</Repository>
+  <Registry>https://github.com/DerKezorm/nexpaper/pkgs/container/nexpaper</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nexpaper/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nexpaper</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nexpaper#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://github.com/DerKezorm/nexpaper</Project>
+  <Overview>Paperless-ngx for the home, the simple version. nexpaper is a light filing cabinet for the papers of a household or a small firm, on your own server: upload, find, done. One container, no Redis, no Celery and no Postgres, and an import that takes over what you already have in Paperless-ngx.&#13;&#13;Everything new waits in an inbox with the fields filled in, whether it came from the browser, a photo taken on the phone, a scanner's folder, a mailbox or Paperless, and one click files it. Scans are read and become searchable PDFs while the original stays exactly as it came, with its checksum. The search understands parts of words and filters. Pages can be turned, deleted, ordered, joined and split, and every change is a new version. Everybody has a vault of their own, the operator makes shared ones for the household or the business, and single documents can be shared with a person or, for somebody without an account, as a link that ends.&#13;&#13;For small firms, e-invoices (ZUGFeRD, Factur-X, XRechnung) are read from their data, a history shows who changed what, and an export for the tax adviser is a ZIP with the PDFs and a list. A second factor is required from the start, passkeys are supported, and accounts come by invitation or through OpenID Connect (one-button setup for authentik). An open API serves the apps that will come. nexpaper is an independent project and not affiliated with Paperless-ngx.</Overview>
+  <Category>Productivity: Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nexpaper.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nexpaper.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-10-11</Date>
+  <Description>Paperless-ngx for the home, the simple version: a filing cabinet for the papers of a household or a small firm, self-hosted. An inbox with proposals, text recognition and full text search, vaults per person and shared ones, a phone upload with camera, e-invoices and an import from Paperless-ngx.&#13;&#13;Open the WebUI and create the first account; it becomes the operator. It needs the setup code from the container log (click the nexpaper icon, then Logs), a new one at every start until nexpaper is set up. To choose the code yourself, set Setup Code below. Right after the password the account sets up its second factor.&#13;&#13;Put nexpaper behind a reverse proxy with TLS before you use it from anywhere but your own network, then set Public URL and Trusted Proxies. Passkeys, the camera and the share menu of a phone need https.&#13;&#13;All data lives under /data: the SQLite database, the documents as plain readable files in /data/dokumente, secret.key, backups and logs. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems. A backup holds the database and the server's secrets but not the documents, so /data/dokumente belongs in the backup your server makes anyway.&#13;&#13;To let a scanner or a share drop files into nexpaper, add another Path below that maps your scan folder to /data/eingang (one subfolder per person), then switch the intake folder on in Settings, Inputs.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8560]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nexpaper</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPAPER_SETUP_TOKEN</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPAPER_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPAPER_TRUSTED_PROXIES</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPAPER_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXPAPER_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXPAPER_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8560" Mode="tcp" Description="Port you reach nexpaper at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8560</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nexpaper" Mode="rw" Description="Holds the SQLite database with accounts and the search index, the documents as plain files in dokumente/, the key secret.key, backups and logs. A backup made by nexpaper does not hold the documents: copy this folder with the backup your server makes anyway. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nexpaper</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="Time zone for timestamps in the log, for example Europe/Berlin. Leave blank for UTC. People's own time zones come from their browsers." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Setup Code" Target="NEXPAPER_SETUP_TOKEN" Default="" Mode="" Description="The code the first account needs to become the operator. Leave blank: nexpaper makes a new one at every start until it is set up and writes it to the container log." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Public URL" Target="NEXPAPER_PUBLIC_URL" Default="" Mode="" Description="The address people use to reach nexpaper, for example https://paper.example.com when it sits behind a reverse proxy. Used for invitation links and the return address of OpenID Connect. Leave blank to take the address of the request; the same can be set later in the settings." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXPAPER_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of your reverse proxies, comma separated, for example 172.16.0.0/12. Only their X-Forwarded-For is believed; without it every sign-in seems to come from the proxy and the brake against password guessing cannot tell people apart." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Container Port (host networking only)" Target="NEXPAPER_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexpaper off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXPAPER_SECRET_KEY" Default="" Mode="" Description="Protects the server-side secrets (the OpenID Connect client secret, the mail password, the AI key). Leave blank: nexpaper creates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXPAPER_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nexpaper should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>
