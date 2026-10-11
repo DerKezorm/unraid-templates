@@ -56,6 +56,7 @@
     <Variable><Value>auto</Value><Name>NEXCRATE_COOKIE_SECURE</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXCRATE_LOG_LEVEL</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXCRATE_URL_BASE</Name><Mode/></Variable>
+    <Variable><Value>127.0.0.1</Value><Name>FORWARDED_ALLOW_IPS</Name><Mode/></Variable>
   </Environment>
   <Labels/>
   <Config Name="WebUI Port" Target="8390" Default="8390" Mode="tcp" Description="Port you reach nexcrate at. Container port: 8390" Type="Port" Display="always" Required="true" Mask="false">8390</Config>
@@ -69,4 +70,5 @@
   <Config Name="Secure Cookie" Target="NEXCRATE_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https. Use on only if a proxy terminates TLS and forwards plain http, and never if nexcrate should also be reachable over http, or nobody stays signed in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
   <Config Name="Log Mode" Target="NEXCRATE_LOG_LEVEL" Default="" Mode="" Description="Fixes the log mode: quiet, normal, detailed or trace. Leave blank to use the mode chosen in the interface. Meant for the case that nexcrate does not start at all." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="URL Base" Target="NEXCRATE_URL_BASE" Default="" Mode="" Description="Serve nexcrate under a sub path behind a reverse proxy, such as /nexcrate. Leave blank for the root." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="FORWARDED_ALLOW_IPS" Default="127.0.0.1" Mode="" Description="Addresses of reverse proxies whose X-Forwarded-For and X-Forwarded-Proto nexcrate believes, comma separated. 127.0.0.1 means nobody from outside the container. Set your proxy here if it terminates TLS, so nexcrate knows a request came in over https." Type="Variable" Display="advanced" Required="false" Mask="false">127.0.0.1</Config>
 </Container>

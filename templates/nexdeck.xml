@@ -56,6 +56,7 @@
     <Variable><Value/><Name>DOCKER_GID</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXDECK_PORT</Name><Mode/></Variable>
     <Variable><Value/><Name>NEXDECK_LOG_LEVEL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXDECK_TRUSTED_PROXIES</Name><Mode/></Variable>
   </Environment>
   <Labels/>
   <Config Name="WebUI Port" Target="8000" Default="5175" Mode="tcp" Description="Port you reach nexdeck at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">5175</Config>
@@ -69,4 +70,5 @@
   <Config Name="Docker Group ID" Target="DOCKER_GID" Default="" Mode="" Description="Group that owns the Docker socket on this server. Leave blank, nexdeck reads it from the socket at start. Only set it if the Docker cards answer permission denied." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Container Port (host networking only)" Target="NEXDECK_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nexdeck off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Log Level" Target="NEXDECK_LOG_LEVEL" Default="" Mode="" Description="Leave blank. The level is chosen inside nexdeck, where a deep level switches itself back off. A value here fixes the level and greys that switch out. Only set it if nexdeck will not start." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXDECK_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of your reverse proxies, comma separated, for example 172.16.0.0/12. Only their X-Forwarded-Proto and X-Forwarded-Host (the rightmost value) are believed when nexdeck builds its own address without a public URL. Leave blank when nexdeck is not behind a proxy or a public URL is set." Type="Variable" Display="advanced" Required="false" Mask="false"/>
 </Container>
