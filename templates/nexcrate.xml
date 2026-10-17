@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://nexcrate.nexapps.dev</Project>
+  <Project>https://github.com/DerKezorm/nexcrate</Project>
   <Overview>nexcrate manages movies, shows and music in one self-hosted app, in place of Radarr, Sonarr and Lidarr side by side. A movie or a show can have several versions, such as Full HD and 4K, each with its own profile and folder, so there is no second instance for 4K. Music has one version for now.&#13;&#13;Profiles come from everyday questions with the rules of the TRaSH Guides inside, and an expert mode edits every part by hand. Movies, shows and anime come from TMDB, music from MusicBrainz. Releases are searched over Newznab and Torznab indexers and downloaded through SABnzbd, NZBGet, qBittorrent, Transmission or Deluge; torrents are hardlinked and keep seeding. A switch-over reads the library, indexers, download clients and profiles of an existing Radarr, Sonarr and Lidarr, then takes the files over.&#13;&#13;Also: automatic search and RSS with delay rules per version, renaming with a preview and an undo, library rules that pick the target folder, a calendar with an iCal feed, notifications, Plex, Jellyfin and Emby told about new files, encrypted backups, and an API for other programs.</Overview>
   <Category>MediaApp:Video MediaApp:Music Downloaders:</Category>
   <WebUI>http://[IP]:[PORT:8390]/</WebUI>

@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://nexdeck.nexapps.dev</Project>
+  <Project>https://github.com/DerKezorm/nexdeck</Project>
   <Overview>nexdeck is a live dashboard for the homelab. Its cards show what the services behind it are doing right now: Unraid, Proxmox and Docker, the media and download stack, DNS filters, backups, cameras and many more. One container, a single SQLite file.&#13;&#13;Administrators can act from the cards, for example start and stop containers or pause downloads, and every action is logged. Boards can be shared with members or shown on a wall display as a kiosk, and nexdeck can send a notification when something fails. The interface is available in English and German.</Overview>
   <Category>Tools: Status:Stable</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>

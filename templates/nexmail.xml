@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://nexmail.nexapps.dev</Project>
+  <Project>https://github.com/DerKezorm/nexmail</Project>
   <Overview>nexmail is a self-hosted email client in the browser. It brings several IMAP mailboxes together in one window: iCloud, Google, Microsoft or any other provider. One container, a single SQLite file, no second database and no cloud service that gets to see your mail.&#13;&#13;It reads, writes, searches, labels, schedules and sends, keeps a calendar over CalDAV, syncs address books over CardDAV and can reach you with the browser closed. Every member of the household gets their own account and mailboxes. The interface is available in English and German.&#13;&#13;nexmail is a mail client, not a mail server. Your mail stays with your provider.</Overview>
   <Category>Productivity: Network:Messenger</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>

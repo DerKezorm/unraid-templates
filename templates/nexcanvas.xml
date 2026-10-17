@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://www.nexcanvas.de</Project>
+  <Project>https://github.com/DerKezorm/nexcanvas</Project>
   <Overview>nexcanvas is a whiteboard for your own server, in the spirit of Apple Freeform: sticky notes, shapes, text, lines, pen and highlighter, photos and PDFs on an endless board, edited by several people at the same time. Everybody sees each change at once, with the pointers and names of the others.&#13;&#13;Frames and scenes to present from, a shape library with over 350 shapes of its own (flowchart, BPMN, UML, floor plan to scale, network, house and electrics) plus the Lucide icons, over thirty templates and your own, backgrounds like grid, blueprint or chalkboard. Export as PNG and PDF, exchange with nexlore and Obsidian as JSON Canvas. Spaces with read, write and manage rights, accounts by invitation or OpenID Connect (one-button setup for authentik), an optional second factor, public pages, backups and a log. English and German, light and dark, works on the phone.</Overview>
   <Category>Productivity: Tools:Utilities</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>

@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://www.nexbrand.de</Project>
+  <Project>https://github.com/DerKezorm/nexbrand</Project>
   <Overview>nexbrand keeps the corporate design of your clients in one place, on your own server: colours with their print values, fonts with their licence, logos with the ground they belong on, a type scale, rules and example files, per client and per project, with every version kept on a time line.&#13;&#13;Checks are computed from the set: contrast of every pair by WCAG 2.2, logos at 3:1, colour vision deficiencies, nearly identical colours, fonts that must not leave the house. A workbench builds a new CI from a few words, a picture or one colour, clients review the directions through a link without an account, and the choice becomes version 1.0. Every version comes as CSS variables, a Tailwind 4 theme, SCSS or design tokens, over an API and over MCP for an AI in your editor. Access per client for people and teams, accounts by invitation or OpenID Connect (one-button setup for authentik), an optional second factor, public pages, backups and a log. English and German, light and dark.</Overview>
   <Category>Productivity: Tools:Utilities</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>

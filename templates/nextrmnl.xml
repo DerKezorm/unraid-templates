@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://nextrmnl.nexapps.dev</Project>
+  <Project>https://github.com/DerKezorm/nextrmnl</Project>
   <Overview>nextrmnl is SSH and SFTP in the browser for the machines in your own network: a terminal (xterm.js) with tabs, jump hosts and copy and paste the way PuTTY does it, plus file transfer next to it. Accounts with a vault each for keys and passwords, sealed with the account's password so that not even the operator can read it. Host keys are checked and remembered, unknown hosts are shown with their fingerprint first.&#13;&#13;Connections can be shared between accounts without sharing access, sign-in works with a password, an optional second factor from an authenticator app, or OpenID Connect (one-button setup for authentik). By default nextrmnl only connects into private networks. Backups as encrypted ZIP files, a log that never contains terminal content or credentials. The interface is available in English and German.</Overview>
   <Category>Tools:Utilities Network:Management</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>

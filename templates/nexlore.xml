@@ -14,7 +14,7 @@
     <Tag>latest</Tag>
     <TagDescription>Latest stable release.</TagDescription>
   </Branch>
-  <Project>https://www.nexlore.de</Project>
+  <Project>https://github.com/DerKezorm/nexlore</Project>
   <Overview>nexlore is a notes app for your own server, in the browser: Markdown files on your disk, written in a real editor (WYSIWYG, slash menu, tables, callouts, properties), linked with [[wiki links]] and backlinks, and laid out as a map you zoom into, from all your spaces down to a single note. The files stay plain Markdown, so Obsidian, Syncthing or any editor can work on the same folder at the same time.&#13;&#13;Daily notes with a calendar, tasks with due dates and repeats, templates, table and board views, canvases in the open JSON Canvas format, full text search with operators, versions and a trash. Spaces with read, write and manage rights, accounts by invitation or OpenID Connect (one-button setup for authentik), an optional second factor, comments, public pages, MCP for AI helpers, an API, backups and a log. English and German, light and dark, installable on the phone.</Overview>
   <Category>Productivity: Tools:Utilities</Category>
   <WebUI>http://[IP]:[PORT:8000]/</WebUI>
