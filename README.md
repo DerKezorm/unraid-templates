@@ -11,6 +11,7 @@ alongside the apps themselves.
 | [nexpulse](templates/nexpulse.xml) | Speed test tracker for the homelab: live gauge, schedules with random times, history, alerts and an API, measuring with Cloudflare, LibreSpeed and optionally Ookla. | [DerKezorm/nexpulse](https://github.com/DerKezorm/nexpulse) |
 | [nexbeat](templates/nexbeat.xml) | Find music and request it from Lidarr: recommendations from your library, genres, MusicBrainz search, accounts with quotas and approvals. | [DerKezorm/nexbeat](https://github.com/DerKezorm/nexbeat) |
 | [nextrmnl](templates/nextrmnl.xml) | SSH and SFTP in the browser: terminal with tabs and jump hosts, file transfer, a vault per account for keys and passwords, host key checks, accounts by invitation or OpenID Connect, a second factor. | [DerKezorm/nextrmnl](https://github.com/DerKezorm/nextrmnl) |
+| [nexcrate](templates/nexcrate.xml) | Movies, shows and music in one self-hosted app in place of Radarr, Sonarr and Lidarr: several versions per title such as Full HD and 4K, profiles from everyday questions with the TRaSH Guides inside, and a page to discover what is missing. | [DerKezorm/nexcrate](https://github.com/DerKezorm/nexcrate) |
 | [nexsift](templates/nexsift.xml) | The filter for your homelab's notifications: one inbox for every service, answers like Gotify, ntfy, Discord, SMTP and syslog, bundles the noise and pushes only what matters. | [DerKezorm/nexsift](https://github.com/DerKezorm/nexsift) |
 | [nexcanvas](templates/nexcanvas.xml) | A whiteboard for your own server like Apple Freeform: notes, shapes, drawings and photos, edited live together, with frames, a shape library, templates and JSON Canvas. | [DerKezorm/nexcanvas](https://github.com/DerKezorm/nexcanvas) |
 | [nexlore](templates/nexlore.xml) | Notes for your own server, in the browser: Markdown files on your disk, a WYSIWYG editor, wiki links and a map of all notes to zoom into, shared spaces with rights. | [DerKezorm/nexlore](https://github.com/DerKezorm/nexlore) |
@@ -41,7 +42,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexdeck/issues](https://github.com/DerKezorm/nexdeck/issues), for nexpulse
 [DerKezorm/nexpulse/issues](https://github.com/DerKezorm/nexpulse/issues), for nexbeat
 [DerKezorm/nexbeat/issues](https://github.com/DerKezorm/nexbeat/issues), for nextrmnl
-[DerKezorm/nextrmnl/issues](https://github.com/DerKezorm/nextrmnl/issues), for nexsift
+[DerKezorm/nextrmnl/issues](https://github.com/DerKezorm/nextrmnl/issues), for nexcrate
+[DerKezorm/nexcrate/issues](https://github.com/DerKezorm/nexcrate/issues), for nexsift
 [DerKezorm/nexsift/issues](https://github.com/DerKezorm/nexsift/issues), for nexcanvas
 [DerKezorm/nexcanvas/issues](https://github.com/DerKezorm/nexcanvas/issues), for nexlore
 [DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues), for nexbrand
