@@ -18,6 +18,7 @@ alongside the apps themselves.
 | [nexbrand](templates/nexbrand.xml) | Your clients' corporate design in one place: colours, fonts, logos, rules and every version, with contrast checks by WCAG 2.2, client reviews, export as code, an API and MCP. | [DerKezorm/nexbrand](https://github.com/DerKezorm/nexbrand) |
 | [nexdiary](templates/nexdiary.xml) | A diary for the family on your own server: notes during the day, a page in the evening, encrypted per person, with a second factor, sharing of single days and an optional AI that only orders. | [DerKezorm/nexdiary](https://github.com/DerKezorm/nexdiary) |
 | [nexpaper](templates/nexpaper.xml) | Paperless-ngx for the home, the simple version: papers of a household or a small firm on your own server, with an inbox, text recognition and search, vaults per person, a phone upload with camera and an import from Paperless-ngx. | [DerKezorm/nexpaper](https://github.com/DerKezorm/nexpaper) |
+| [nexbooks](templates/nexbooks.xml) | Your e-books and audiobooks on your own server: read and listen in the browser, one book with all its editions, a shelf for each genre, pages for authors and fetching through your own indexers. | [DerKezorm/nexbooks](https://github.com/DerKezorm/nexbooks) |
 
 ## Installing from Community Applications
 
@@ -49,7 +50,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexlore/issues](https://github.com/DerKezorm/nexlore/issues), for nexbrand
 [DerKezorm/nexbrand/issues](https://github.com/DerKezorm/nexbrand/issues), for nexdiary
 [DerKezorm/nexdiary/issues](https://github.com/DerKezorm/nexdiary/issues), for nexpaper
-[DerKezorm/nexpaper/issues](https://github.com/DerKezorm/nexpaper/issues).
+[DerKezorm/nexpaper/issues](https://github.com/DerKezorm/nexpaper/issues), for nexbooks
+[DerKezorm/nexbooks/issues](https://github.com/DerKezorm/nexbooks/issues).
 
 ## Licence
 
