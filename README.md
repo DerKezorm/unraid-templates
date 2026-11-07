@@ -19,6 +19,7 @@ alongside the apps themselves.
 | [nexdiary](templates/nexdiary.xml) | A diary for the family on your own server: notes during the day, a page in the evening, encrypted per person, with a second factor, sharing of single days and an optional AI that only orders. | [DerKezorm/nexdiary](https://github.com/DerKezorm/nexdiary) |
 | [nexpaper](templates/nexpaper.xml) | Paperless-ngx for the home, the simple version: papers of a household or a small firm on your own server, with an inbox, text recognition and search, vaults per person, a phone upload with camera and an import from Paperless-ngx. | [DerKezorm/nexpaper](https://github.com/DerKezorm/nexpaper) |
 | [nexbooks](templates/nexbooks.xml) | Your e-books and audiobooks on your own server: read and listen in the browser, one book with all its editions, a shelf for each genre, pages for authors and fetching through your own indexers. | [DerKezorm/nexbooks](https://github.com/DerKezorm/nexbooks) |
+| [nextasks](templates/nextasks.xml) | Tasks for families and small groups on your own server: spaces with members, lists, due dates and repeats, tasks assigned to several people, reports by mail and notifications to the browser and the iPhone app. | [DerKezorm/nextasks](https://github.com/DerKezorm/nextasks) |
 
 ## Installing from Community Applications
 
@@ -51,7 +52,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexbrand/issues](https://github.com/DerKezorm/nexbrand/issues), for nexdiary
 [DerKezorm/nexdiary/issues](https://github.com/DerKezorm/nexdiary/issues), for nexpaper
 [DerKezorm/nexpaper/issues](https://github.com/DerKezorm/nexpaper/issues), for nexbooks
-[DerKezorm/nexbooks/issues](https://github.com/DerKezorm/nexbooks/issues).
+[DerKezorm/nexbooks/issues](https://github.com/DerKezorm/nexbooks/issues), for nextasks
+[DerKezorm/nextasks/issues](https://github.com/DerKezorm/nextasks/issues).
 
 ## Licence
 

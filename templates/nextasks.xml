@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nextasks</Name>
+  <Repository>ghcr.io/derkezorm/nextasks</Repository>
+  <Registry>https://github.com/DerKezorm/nextasks/pkgs/container/nextasks</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/DerKezorm/nextasks/issues</Support>
+  <GitHub>https://github.com/DerKezorm/nextasks</GitHub>
+  <ReadMe>https://github.com/DerKezorm/nextasks#readme</ReadMe>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release.</TagDescription>
+  </Branch>
+  <Project>https://github.com/DerKezorm/nextasks</Project>
+  <Overview>Tasks for families and small groups on your own server. One container, SQLite, and a calm look of its own.&#13;&#13;Spaces such as Family or Garden have their members and their lists. A task has a due date with an optional time, repeats, a priority, tags, subtasks, a note in Markdown, a link and attachments, and it can be assigned to one or more people of the space: whoever ticks it off first, ticks it off for everybody. Lists show as a list or as columns, and quick entry turns "Milk tomorrow 9am #groceries !!" into a task due tomorrow at nine. Every account also has a private space of its own.&#13;&#13;Notifications are chosen per person in one table: a daily report and a weekly report by mail, web push to the browser, and the iPhone app through a push relay that only carries encrypted messages. nextasks installs from the browser as an app, speaks English and German, and has an API for Home Assistant, n8n and your own scripts.&#13;&#13;Accounts come by invitation only, with a second factor (TOTP, which the operator can require for everybody) and sign-in through any number of OpenID Connect providers side by side. Backups run on a schedule and can be downloaded, uploaded and restored. This is an early release: keep a backup and open an issue when something is wrong.</Overview>
+  <Category>Productivity:</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/templates/nextasks.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/DerKezorm/unraid-templates/main/icons/nextasks.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <Date>2026-11-07</Date>
+  <Description>Tasks for families and small groups on your own server: spaces with members, lists, due dates and repeats, tasks assigned to several people, reports by mail and notifications to the browser and the iPhone app.&#13;&#13;Open the WebUI and create the first account; it becomes the operator. It needs the setup code from the container log (click the nextasks icon, then Logs), a new one at every start until nextasks is set up. To choose the code yourself, set Setup Code below. Further accounts come by invitation: the operator invites into nextasks, and the managers of a space invite into their space.&#13;&#13;Put nextasks behind a reverse proxy with TLS before you use it from anywhere but your own network, then set Public URL and Trusted Proxies. Invitation links, links in mails and the QR code of the iPhone app carry the public address, and web push needs https.&#13;&#13;All data lives under /data: the SQLite database, the files of attachments, secret.key, backups, logs and your own languages. Keep it on a local disk, never on an SMB or NFS share, because SQLite locking is not reliable over network filesystems. nextasks makes its own backups under Settings, Server, Backup.&#13;&#13;Set PUID and PGID to the user that should own the files. 99 and 100 are the Unraid defaults and work out of the box.</Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>[PORT:8510]</HostPort>
+        <ContainerPort>8000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/nextasks</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable><Value>99</Value><Name>PUID</Name><Mode/></Variable>
+    <Variable><Value>100</Value><Name>PGID</Name><Mode/></Variable>
+    <Variable><Value/><Name>TZ</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTASKS_SETUP_TOKEN</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTASKS_PUBLIC_URL</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTASKS_TRUSTED_PROXIES</Name><Mode/></Variable>
+    <Variable><Value>https://push.nexapps.dev</Value><Name>NEXTASKS_PUSH_RELAY</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTASKS_PORT</Name><Mode/></Variable>
+    <Variable><Value/><Name>NEXTASKS_SECRET_KEY</Name><Mode/></Variable>
+    <Variable><Value>auto</Value><Name>NEXTASKS_COOKIE_SECURE</Name><Mode/></Variable>
+  </Environment>
+  <Labels/>
+  <Config Name="WebUI Port" Target="8000" Default="8510" Mode="tcp" Description="Port you reach nextasks at. Container port: 8000" Type="Port" Display="always" Required="true" Mask="false">8510</Config>
+  <Config Name="Data (Container Path: /data)" Target="/data" Default="/mnt/user/appdata/nextasks" Mode="rw" Description="Holds the SQLite database nextasks.db, the files of attachments, the key secret.key, backups, logs and your own languages. Keep it on a local disk, not on a network share." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nextasks</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that should own the files in /data. 99 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that should own the files in /data. 100 is the Unraid default." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="Time Zone" Target="TZ" Default="" Mode="" Description="The time zone of accounts that have not chosen one of their own, for example Europe/Berlin. Leave blank for UTC." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Setup Code" Target="NEXTASKS_SETUP_TOKEN" Default="" Mode="" Description="The code the first account needs to become the operator. Leave blank: nextasks makes a new one at every start until it is set up and writes it to the container log." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Public URL" Target="NEXTASKS_PUBLIC_URL" Default="" Mode="" Description="The address people use to reach nextasks, for example https://tasks.example.com when it sits behind a reverse proxy. Used for invitation links, links in mails, the QR code of the iPhone app and the return address of OpenID Connect. Leave blank to take the address of the request; the setting in the interface wins when set." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trusted Proxies" Target="NEXTASKS_TRUSTED_PROXIES" Default="" Mode="" Description="Addresses or networks of your reverse proxies, comma separated, for example 172.16.0.0/12. Only their X-Forwarded-For and X-Forwarded-Proto are believed, so only they can tell nextasks that a request came in over https; without it every sign-in seems to come from the proxy and the brake against password guessing cannot tell people apart." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Push Relay" Target="NEXTASKS_PUSH_RELAY" Default="https://push.nexapps.dev" Mode="" Description="The relay that hands notifications to Apple for the iPhone app. Only encrypted messages and the device's ticket go there. Empty: nothing goes out, and the app plans its own reminders." Type="Variable" Display="advanced" Required="false" Mask="false">https://push.nexapps.dev</Config>
+  <Config Name="Container Port (host networking only)" Target="NEXTASKS_PORT" Default="" Mode="" Description="Leave this empty unless you switched Network Type to Host. In bridge mode the WebUI Port above already does the job and setting this will break it, because the mapping still points at 8000. On host networking the port inside the container is the port on your server, so use this to move nextasks off 8000 if something else is already there." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Secret Key" Target="NEXTASKS_SECRET_KEY" Default="" Mode="" Description="Protects the server-side secrets (the client secrets of sign-in providers, the mail password, the seeds of second factors, the key of web push). Leave blank: nextasks creates one on first start and keeps it in /data/secret.key." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Secure Cookie" Target="NEXTASKS_COOKIE_SECURE" Default="auto" Mode="" Description="auto marks the session cookie Secure when the request arrived over https, also behind a proxy listed under Trusted Proxies that sends X-Forwarded-Proto. Use on only if a proxy terminates TLS and forwards plain http without that header, and never if nextasks should also be reachable over http, or nobody can sign in. off never marks it." Type="Variable" Display="advanced" Required="false" Mask="false">auto</Config>
+</Container>
