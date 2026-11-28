@@ -21,6 +21,7 @@ alongside the apps themselves.
 | [nexbooks](templates/nexbooks.xml) | Your e-books and audiobooks on your own server: read and listen in the browser, one book with all its editions, a shelf for each genre, pages for authors and fetching through your own indexers. | [DerKezorm/nexbooks](https://github.com/DerKezorm/nexbooks) |
 | [nextasks](templates/nextasks.xml) | Tasks for families and small groups on your own server: spaces with members, lists, due dates and repeats, tasks assigned to several people, reports by mail and notifications to the browser and the iPhone app. | [DerKezorm/nextasks](https://github.com/DerKezorm/nextasks) |
 | [nextime](templates/nextime.xml) | A calendar for families and small groups on your own server: own and shared calendars, iCloud, Google and CalDAV in one place, and a CalDAV server for iPhone and Android. | [DerKezorm/nextime](https://github.com/DerKezorm/nextime) |
+| [nexfolk](templates/nexfolk.xml) | Contacts for families and small groups on your own server: several address books per person, shared to read or to change, birthdays in view, and a CardDAV server for iPhone and Android. | [DerKezorm/nexfolk](https://github.com/DerKezorm/nexfolk) |
 
 ## Installing from Community Applications
 
@@ -55,7 +56,8 @@ Problems with an app itself belong in that app's own repository: for Nexview tha
 [DerKezorm/nexpaper/issues](https://github.com/DerKezorm/nexpaper/issues), for nexbooks
 [DerKezorm/nexbooks/issues](https://github.com/DerKezorm/nexbooks/issues), for nextasks
 [DerKezorm/nextasks/issues](https://github.com/DerKezorm/nextasks/issues), for nextime
-[DerKezorm/nextime/issues](https://github.com/DerKezorm/nextime/issues).
+[DerKezorm/nextime/issues](https://github.com/DerKezorm/nextime/issues), for nexfolk
+[DerKezorm/nexfolk/issues](https://github.com/DerKezorm/nexfolk/issues).
 
 ## Licence
 
